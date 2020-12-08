@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">Washing_machine</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="whites">Λευκά</string>
+    <string name="blacks">Σκούρα</string>
+    <string name="colors">Χρωματιστά</string>
+</resources>
