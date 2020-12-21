@@ -5,4 +5,10 @@
     <string name="whites">Λευκά</string>
     <string name="blacks">Σκούρα</string>
     <string name="colors">Χρωματιστά</string>
+    <string name="main_menu_title">Κεντρικό Μενού</string>
+    <string name="help">help</string>]
+    <string name="extra_options_button">Περισσότερες επιλογές</string>
+    <string name="temp">Θερμοκρασία</string>
+    <string name="rotations">Στροφές</string>
+    <string name="total_time">Χρόνος πλύσης</string>
 </resources>

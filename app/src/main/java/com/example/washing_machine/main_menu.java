@@ -7,24 +7,48 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
-public class main_menu extends Fragment {
+public class main_menu extends Fragment implements View.OnClickListener{
 
 // The onCreateView method is called when Fragment should create its View object hierarchy,
 // either dynamically or via XML layout inflation.
-
+private View mView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle
             savedInstanceState) {
         // Defines the xml file for the fragment
-        return inflater.inflate(R.layout.fragment_main_menu, parent, false);
+        mView = inflater.inflate(R.layout.fragment_main_menu, parent, false);
+
+        return mView;
     }
 
     // This event is triggered soon after onCreateView().
 // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        // Setup any handles to view objects here
-        // EditText etFoo = (EditText) view.findViewById(R.id.etFoo);
+        LinearLayout whites_layout = (LinearLayout) view.findViewById(R.id.whites_layout);
+        LinearLayout blacks_layout = (LinearLayout) mView.findViewById(R.id.blacks_layout);
+        LinearLayout colors_layout = (LinearLayout) mView.findViewById(R.id.colors_layout);
+
+        whites_layout.setOnClickListener(this);
+        blacks_layout.setOnClickListener(this);
+        colors_layout.setOnClickListener(this);
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.whites_layout:
+                ((MainActivity)getActivity()).changeFragment(new temps_fragment(0));
+                break;
+            case R.id.blacks_layout:
+                ((MainActivity)getActivity()).changeFragment(new temps_fragment(1));
+                break;
+            case R.id.colors_layout:
+                ((MainActivity)getActivity()).changeFragment(new temps_fragment(2));
+                break;
+        }
+    }
+
 }

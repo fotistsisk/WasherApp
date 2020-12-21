@@ -1,33 +1,74 @@
 package com.example.washing_machine;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import static android.view.View.SYSTEM_UI_FLAG_FULLSCREEN;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
+
+    Stack<Fragment>fragmentStack;
+
     public MainActivity() {
         super(R.layout.activity_main);
     }
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fragmentStack = new Stack<>();
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            /*getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.fragment_container_view, main_menu.class, null)
-                    .commit();
+                    .commit();*/
+            main_menu f = new main_menu();
+            FragmentManager fm = getSupportFragmentManager();
+            FragmentTransaction transaction = fm.beginTransaction();
+            transaction.add(R.id.fragment_container_view, f);
+            fragmentStack.push(f);
+            transaction.commit();
         }
         hideSystemUI();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView titleTextView = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        titleTextView.setText(R.string.main_menu_title);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+
+        toolbar.setNavigationOnClickListener(v -> {
+            if(!fragmentStack.empty() ) {
+                fragmentStack.pop();
+                Fragment fragment = fragmentStack.pop();
+                //Toast.makeText(getApplicationContext(), "Hello Javatpoint " + fragment_name, Toast.LENGTH_SHORT).show();
+
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction transaction = fm.beginTransaction();
+
+                changeFragment(fragment);
+            }
+        });
+
+
+
         // this is the view we will add the gesture detector to
         View myView = findViewById(R.id.mainView);
 
@@ -51,6 +92,32 @@ public class MainActivity extends AppCompatActivity {
         myView.setOnTouchListener(touchListener);
 
 
+    }
+
+
+    public void changeFragment(Fragment f){
+
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        transaction.replace(R.id.fragment_container_view, f);
+        fragmentStack.push(f);
+        transaction.commit();
+        checkBackButtonOnToolbar();
+    }
+
+    private Object createFragmentClass(String fragment_name){
+        Class c= null;
+        try {
+            c = Class.forName(fragment_name);
+            return c.newInstance();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 
@@ -78,12 +145,39 @@ public class MainActivity extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
     }
 
+    private void checkBackButtonOnToolbar(){
+        if(fragmentStack.peek().getClass().toString().equals(main_menu.class.toString()))
+            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        else
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if(item.getItemId() == R.id.help_icon){
+            help_fragment fragment = new help_fragment();
+            changeFragment(fragment);
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
         if (hasFocus) {
             hideSystemUI();
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
