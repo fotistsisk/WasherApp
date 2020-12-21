@@ -11,4 +11,5 @@
     <string name="temp">Θερμοκρασία</string>
     <string name="rotations">Στροφές</string>
     <string name="total_time">Χρόνος πλύσης</string>
+    <string name="start">Έναρξη</string>
 </resources>

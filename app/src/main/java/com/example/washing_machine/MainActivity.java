@@ -152,8 +152,6 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

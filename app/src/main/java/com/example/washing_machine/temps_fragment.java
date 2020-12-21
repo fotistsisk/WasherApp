@@ -33,44 +33,48 @@ public class temps_fragment extends Fragment {
 // Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        ListView lv = (ListView) view.findViewById(R.id.temps_listview);
-        lv.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        ListView listViewTemps = (ListView) view.findViewById(R.id.temps_listview);
+        ListView listViewRotations = (ListView) view.findViewById(R.id.rotations_listview);
+        TextView timeText = view.findViewById(R.id.time_text);
+        timeText.setText("2:10");
 
-        TextView time = view.findViewById(R.id.time_text);
-        time.setText("");
+
 
         // Instanciating an array list (you don't need to do this,
         // you already have yours).
-        String[] temps = {"20","30","40","60"};
-
+        String[] temps = {"20","30","40","60","90"};
+        String[] rotations = {"600","800","1200","1400","1600"};
 
 
         // This is the array adapter, it takes the context of the activity as a
         // first parameter, the type of list view as a second parameter and your
         // array as a third parameter.
-        myArrayAdapter<String> arrayAdapter = new myArrayAdapter<String>(
+        myArrayAdapter<String> arrayAdapterTemps = new myArrayAdapter<String>(
                 view.getContext(),
                 R.layout.list_item,
                 temps);
 
-        arrayAdapter.changeSelected(type);
+        myArrayAdapter<String> arrayAdapterRotations = new myArrayAdapter<String>(
+                view.getContext(),
+                R.layout.list_item,
+                rotations);
 
-        lv.setAdapter(arrayAdapter);
+        arrayAdapterTemps.changeSelected(type);
 
-        //arrayAdapter.notifyDataSetChanged();
-        Toast.makeText(getActivity(),
-                "Position: "+arrayAdapter.getView(1,null,lv),
-                Toast.LENGTH_LONG).show();
+        arrayAdapterRotations.changeSelected(type);
 
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position,long arg3) {
-                arrayAdapter.changeSelected(position);
-                arrayAdapter.notifyDataSetChanged();
-                Toast.makeText(getActivity(),
-                        "Position: "+position,
-                        Toast.LENGTH_SHORT).show();
-            }
+        listViewTemps.setAdapter(arrayAdapterTemps);
+
+        listViewRotations.setAdapter(arrayAdapterRotations);
+
+        listViewTemps.setOnItemClickListener((parent, view1, position, arg3) -> {
+            arrayAdapterTemps.changeSelected(position);
+            arrayAdapterTemps.notifyDataSetChanged();
+        });
+
+        listViewRotations.setOnItemClickListener((parent, view1, position, arg3) -> {
+            arrayAdapterRotations.changeSelected(position);
+            arrayAdapterRotations.notifyDataSetChanged();
         });
     }
 }
