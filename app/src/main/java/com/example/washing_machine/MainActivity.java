@@ -14,15 +14,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
 
     Stack<Fragment>fragmentStack;
+
+    private boolean detergentSensor;
 
     public MainActivity() {
         super(R.layout.activity_main);
@@ -37,13 +37,14 @@ public class MainActivity extends AppCompatActivity {
                     .setReorderingAllowed(true)
                     .add(R.id.fragment_container_view, main_menu.class, null)
                     .commit();*/
-            main_menu f = new main_menu();
+            MainMenu f = new MainMenu();
             FragmentManager fm = getSupportFragmentManager();
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.add(R.id.fragment_container_view, f);
             fragmentStack.push(f);
             transaction.commit();
         }
+        detergentSensor = false;
         hideSystemUI();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -120,6 +121,14 @@ public class MainActivity extends AppCompatActivity {
         return null;
     }
 
+    public boolean isDetergentSensor() {
+        return detergentSensor;
+    }
+
+    public void setDetergentSensor(boolean detergentSensor) {
+        this.detergentSensor = detergentSensor;
+    }
+
 
     private void hideSystemUI() {
         // Enables regular immersive mode.
@@ -146,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void checkBackButtonOnToolbar(){
-        if(fragmentStack.peek().getClass().toString().equals(main_menu.class.toString()))
+        if(fragmentStack.peek().getClass().toString().equals(MainMenu.class.toString()))
             getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         else
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -156,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if(item.getItemId() == R.id.help_icon){
-            help_fragment fragment = new help_fragment();
+            HelpFragment fragment = new HelpFragment();
             changeFragment(fragment);
 
         }
@@ -178,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
     class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
 
         @Override
@@ -192,6 +202,15 @@ public class MainActivity extends AppCompatActivity {
             hideSystemUI();
             return true;
         }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            Log.i("TAG", "onDoubleTap: ");
+            setDetergentSensor(!isDetergentSensor());
+            return true;
+        }
+
+
     }
 }
 

@@ -6,7 +6,7 @@
     android:id="@+id/mainMenu"
     android:background="@color/primary"
     android:layout_height="match_parent"
-    tools:context=".main_menu">
+    tools:context=".MainMenu">
 
     <LinearLayout
         android:orientation="vertical"

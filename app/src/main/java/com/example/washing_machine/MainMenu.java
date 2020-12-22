@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-public class main_menu extends Fragment implements View.OnClickListener{
+public class MainMenu extends Fragment implements View.OnClickListener{
 
 // The onCreateView method is called when Fragment should create its View object hierarchy,
 // either dynamically or via XML layout inflation.
@@ -40,13 +40,13 @@ private View mView;
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.whites_layout:
-                ((MainActivity)getActivity()).changeFragment(new temps_fragment(0));
+                ((MainActivity)getActivity()).changeFragment(new TempsFragment(0));
                 break;
             case R.id.blacks_layout:
-                ((MainActivity)getActivity()).changeFragment(new temps_fragment(1));
+                ((MainActivity)getActivity()).changeFragment(new TempsFragment(1));
                 break;
             case R.id.colors_layout:
-                ((MainActivity)getActivity()).changeFragment(new temps_fragment(2));
+                ((MainActivity)getActivity()).changeFragment(new TempsFragment(2));
                 break;
         }
     }

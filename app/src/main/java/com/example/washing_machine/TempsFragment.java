@@ -2,20 +2,21 @@ package com.example.washing_machine;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class temps_fragment extends Fragment {
+public class TempsFragment extends Fragment {
     private int type;
 
-    public temps_fragment(int i) {
+    private DialogFragment dialogFragment;
+    public TempsFragment(int i) {
         type = i;
     }
 
@@ -35,6 +36,7 @@ public class temps_fragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         ListView listViewTemps = (ListView) view.findViewById(R.id.temps_listview);
         ListView listViewRotations = (ListView) view.findViewById(R.id.rotations_listview);
+        Button beginButton = view.findViewById(R.id.start_button_temps);
         TextView timeText = view.findViewById(R.id.time_text);
         timeText.setText("2:10");
 
@@ -76,5 +78,15 @@ public class temps_fragment extends Fragment {
             arrayAdapterRotations.changeSelected(position);
             arrayAdapterRotations.notifyDataSetChanged();
         });
+
+        beginButton.setOnClickListener(v -> {
+            dialogFragment = new DetergentDialogFragment();
+            MainActivity main = (MainActivity) getActivity();
+            dialogFragment.show(main.getSupportFragmentManager(), "detergent");
+        });
+    }
+
+    public DialogFragment getDialogFragment() {
+        return dialogFragment;
     }
 }
