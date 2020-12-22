@@ -14,4 +14,5 @@
     <string name="start">Έναρξη</string>
     <string name="detergent_dialog">Παρακαλώ προσθέστε το απορρυπαντικό και το μαλλακτικό πριν την έναρξη της πλύσης</string>
     <string name="continue_dialog">Συνέχεια</string>
+    <string name="washing_ends">Το πλυντήριο θα τελειώσει σε :</string>
 </resources>
