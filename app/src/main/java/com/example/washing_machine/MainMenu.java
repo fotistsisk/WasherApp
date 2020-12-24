@@ -38,17 +38,7 @@ private View mView;
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.whites_layout:
-                ((MainActivity)getActivity()).changeFragment(new TempsFragment(0));
-                break;
-            case R.id.blacks_layout:
-                ((MainActivity)getActivity()).changeFragment(new TempsFragment(1));
-                break;
-            case R.id.colors_layout:
-                ((MainActivity)getActivity()).changeFragment(new TempsFragment(2));
-                break;
-        }
+        ((MainActivity)getActivity()).changeFragment(new TempsFragment());
     }
 
 }

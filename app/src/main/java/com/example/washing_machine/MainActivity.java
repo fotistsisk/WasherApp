@@ -22,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
     Stack<Fragment>fragmentStack;
 
+
+
+    private int washType;
+
     private boolean detergentSensor;
 
     public MainActivity() {
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
             FragmentTransaction transaction = fm.beginTransaction();
             transaction.add(R.id.fragment_container_view, f);
             fragmentStack.push(f);
-            transaction.commit();
+            transaction.commitNow();
         }
         detergentSensor = false;
         hideSystemUI();
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction transaction = fm.beginTransaction();
         transaction.replace(R.id.fragment_container_view, f);
         fragmentStack.push(f);
-        transaction.commit();
+        transaction.commitNow();
         checkBackButtonOnToolbar();
     }
 
@@ -152,6 +156,14 @@ public class MainActivity extends AppCompatActivity {
                 View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                         | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+    }
+
+    public int getWashType() {
+        return washType;
+    }
+
+    public void setWashType(int washType) {
+        this.washType = washType;
     }
 
     private void checkBackButtonOnToolbar(){

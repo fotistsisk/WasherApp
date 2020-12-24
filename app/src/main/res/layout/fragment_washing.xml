@@ -31,6 +31,7 @@
             android:padding="16dp">
 
             <TextView
+                android:textSize="32sp"
                 style="@style/text_washing"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -38,11 +39,13 @@
                 android:text="@string/washing_ends"/>
 
             <TextView
+                android:id="@+id/time_left_washing_text"
                 style="@style/text_washing"
-                android:textSize="42sp"
-                android:text="0:35" />
+                android:textSize="48sp" />
 
             <TextView
+                android:id="@+id/washing_stage_text"
+                android:textSize="32sp"
                 style="@style/text_washing"
                 android:text="Στάδιο πλύσης:\nΞέβγαλμα"/>
 

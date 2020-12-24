@@ -1,7 +1,10 @@
 package com.example.washing_machine;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -15,13 +18,9 @@ import android.widget.TextView;
 public class TempsFragment extends Fragment {
     private int type;
 
-    private DialogFragment dialogFragment;
-    public TempsFragment(int i) {
-        type = i;
-    }
+    private MainActivity main;
 
-// The onCreateView method is called when Fragment should create its View object hierarchy,
-// either dynamically or via XML layout inflation.
+    private DialogFragment dialogFragment;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle
@@ -30,10 +29,9 @@ public class TempsFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_temps, parent, false);
     }
 
-    // This event is triggered soon after onCreateView().
-// Any view setup should occur here.  E.g., view lookups and attaching view listeners.
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        type = main.getWashType();
         ListView listViewTemps = (ListView) view.findViewById(R.id.temps_listview);
         ListView listViewRotations = (ListView) view.findViewById(R.id.rotations_listview);
         Button beginButton = view.findViewById(R.id.start_button_temps);
@@ -81,9 +79,14 @@ public class TempsFragment extends Fragment {
 
         beginButton.setOnClickListener(v -> {
             dialogFragment = new DetergentDialogFragment();
-            MainActivity main = (MainActivity) getActivity();
             dialogFragment.show(main.getSupportFragmentManager(), "detergent");
         });
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        main = (MainActivity) activity;
+        super.onAttach(activity);
     }
 
     public DialogFragment getDialogFragment() {
